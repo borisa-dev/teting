@@ -21,7 +21,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return new UserCollection($this->userRepository->getAllWithPaginate(columns: ['name', 'email', 'created_at']));
+        return new UserCollection($this->userRepository->getAllWithPaginate(
+            request()->get('page'),
+            request()->get('per_page'),
+            ['name', 'email', 'created_at'])
+        );
     }
 
     /**
