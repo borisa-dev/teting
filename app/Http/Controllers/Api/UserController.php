@@ -3,16 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserCollection;
+use app\Interfaces\Repositories\IUserRepository;
 use Illuminate\Http\Request;
 
-class UserConttroller extends Controller
+class UserController extends Controller
 {
+
+    public function __construct(public IUserRepository $userRepository)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return new UserCollection($this->userRepository->getAllWithPaginate(columns: ['name','email','created_at']));
     }
 
     /**
